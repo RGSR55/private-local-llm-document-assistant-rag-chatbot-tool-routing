@@ -1,0 +1,10 @@
+Resumo:
+Francisca enviou um orçamento para um pedido de kit, aplicando um desconto extra de 10%. A disponibilidade dos discos de 10kg e 15kg está prevista para meados de Janeiro. Os portes de envio são cobrados em função do peso total da encomenda.
+
+Pontos Principais:
+- Orçamento enviado
+- Desconto extra aplicado (10%)
+- Disponibilidade dos discos pendente até meados de Janeiro
+- Portes de envio relacionados com o peso total
+
+Fonte: Pedido de Orçamento.eml
