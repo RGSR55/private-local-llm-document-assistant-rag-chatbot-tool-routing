@@ -7,12 +7,11 @@ from pathlib import Path
 
 OLLAMA_URL = "http://127.0.0.1:11434"
 EMBED_MODEL = "nomic-embed-text"
-LLM_MODEL = "qwen2.5:3b"#qwen2.5:3b
+LLM_MODEL = "qwen2.5:3b"
 
 TOP_K = 8
 FINAL_K = 3
 MAX_CHARS = 3000
-
 
 # ---------------- EMBEDDING ----------------
 def gerar_embedding(texto: str):
@@ -33,7 +32,6 @@ def gerar_embedding(texto: str):
         print("❌ erro embedding:", e)
         return None
 
-
 # ---------------- SEARCH ----------------
 def procurar_chunks(pergunta, chunks, vetores, k):
     vec = gerar_embedding(pergunta)
@@ -48,7 +46,6 @@ def procurar_chunks(pergunta, chunks, vetores, k):
 
     return [(chunks[i], float(sims[i])) for i in idx]
 
-
 # ---------------- RERANK ----------------
 def rerank(query, results):
     words = query.lower().split()
@@ -61,11 +58,9 @@ def rerank(query, results):
 
     return sorted(results, key=lambda x: x["final_score"], reverse=True)
 
-
 # ---------------- LIMPAR TEXTO ----------------
 def limpar_texto(t):
     return t.replace("##", "").strip()
-
 
 # ---------------- CONTEXTO ----------------
 def construir_contexto(results):
@@ -81,7 +76,6 @@ def construir_contexto(results):
 
     return contextos
 
-
 def limitar_contexto(contextos):
     texto = ""
     for c in contextos:
@@ -89,7 +83,6 @@ def limitar_contexto(contextos):
             break
         texto += c + "\n\n---\n\n"
     return texto
-
 
 # ---------------- ANSWER ----------------
 def gerar_resposta(pergunta, contextos):
@@ -171,7 +164,6 @@ RESPOSTA:
         print(f"❌ erro ao gerar resposta: {e}")
         return ""
 
-
 # ---------------- MAIN ----------------
 def main():
     if len(sys.argv) < 2:
@@ -223,7 +215,6 @@ def main():
 
     print("─" * 60)
 
-    # 📌 fonte principal (a que mais contribuiu)
     if final:
         fonte_principal = final[0]
 
@@ -237,16 +228,6 @@ def main():
             uri = "file://" + os.path.abspath(caminho)
             print(f"\033]8;;{uri}\033\\📂 abrir ficheiro\033]8;;\033\\")
             print("\n")
-
-
-            #try:
-                # abrir normalmente
-                #os.startfile(caminho)
-
-            #except Exception as e:
-                #print(f"⚠️ não foi possível abrir automaticamente: {e}")
-        
-
 
 if __name__ == "__main__":
     main()

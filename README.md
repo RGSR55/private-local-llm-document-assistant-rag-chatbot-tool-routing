@@ -23,14 +23,15 @@ Supported capabilities include:
 
 - Semantic document search
 - Contextual RAG responses
-- Automatic summarization
-- Local file reading
-- Natural language mathematical calculations
+- Automatic document summarization
+- Temporary in-session document analysis without persistent storage
+- Deadline calculations and elapsed time tracking
 - Date/time operations
-- Deadline calculations
+- Document listing
+- Natural language mathematical calculations
 - Intelligent CSV querying
 - Result exporting
-- Source attribution and contextual grounding
+- Grounded responses with source attribution and direct document access and reading
 
 The architecture combines:
 
@@ -81,38 +82,9 @@ Hybrid reranking:
 
 ---
 
-## Available Tools
+## Streamlit Interface
 
 ![Main Streamlit interface with upload and integrated tools](printscreens/02-interface+upload+tools_md.png)
-
-- Automatic document summarization
-- Direct file reading
-- Document listing
-- Natural language math calculations
-- Current date and time
-- Deadline and remaining-day calculations
-- Export responses to `.txt`
-
-Intelligent CSV querying:
-
-![CSV analytics and structured query example](printscreens/03-agente_csv.png)
-
-- Revenue and expense analysis
-- Profit-based queries
-- Time-period filtering
-- Best/worst month detection
-- Natural language business metrics queries
-- Source attribution
-- Relevant snippet extraction
-
-Natural Language Math Calculations
-
-![Natural language calculator example](printscreens/03-agente_math.png)
-
-- Natural language mathematical queries
-- Multi-step expression parsing
-- Deterministic tool execution
-- Accurate calculations without relying on LLM reasoning
 
 ---
 
@@ -207,11 +179,6 @@ Future versions may introduce **native LLM tool calling** when larger hardware r
 
 # Example: Deadline Questions
 
-Question:
-
-```text
-How many days remain until contract X expires?
-```
 ![Deadline Example](printscreens/03-agente_docx.png)
 
 Execution flow:
@@ -261,11 +228,9 @@ Email files are particularly challenging because they often contain significant 
 - Formatting artifacts
 - Redundant conversational history
 
-Despite this noisy structure, the system successfully extracted relevant information, identified context, performed temporal reasoning, generated summaries, and maintained coherent interactions.
+Despite this noisy structure, the system successfully extracted relevant information, identified context, performed temporal reasoning, generated summaries, and maintained coherent interactions. The outcome is especially noteworthy given the use of a small local language model operating on constrained hardware.
 
-This example demonstrates that even with lightweight local models and constrained hardware, **semantic retrieval and deterministic tool routing can compensate for difficult input formats and limited model capabilities.**
-
-Rather than relying solely on raw LLM reasoning, the runtime agent routes requests toward specialized tools and contextual retrieval pipelines, improving robustness and reducing hallucinations.
+This example demonstrates that a carefully designed architecture combining semantic retrieval and deterministic tool routing can offset many of the limitations typically associated with lightweight models, allowing useful AI-assisted document analysis.
 
 ---
 
@@ -273,14 +238,13 @@ Rather than relying solely on raw LLM reasoning, the runtime agent routes reques
 
 ![TXT retrieval](printscreens/03-agente_txt.png)
 
-Example of contextual retrieval from a `.txt` document using semantic embeddings and RAG.
+Example of contextual retrieval from a `.txt` document using RAG pipeline.
 
 Capabilities shown:
 
 - Semantic document search
 - Context retrieval
-- Source attribution
-- Response grounding using retrieved chunks
+- Source traceability and direct document navigation
 
 ---
 
@@ -293,10 +257,28 @@ Example of question answering over indexed `.pdf` documents.
 Capabilities shown:
 
 - PDF content extraction
-- Vector retrieval
-- Hybrid reranking
-- Context grounding
-- Source-based response generation
+- Source-based response generation with direct document access
+- Response grounding using retrieved chunks
+
+---
+
+### Intelligent CSV querying
+
+![CSV analytics and structured query example](printscreens/03-agente_csv.png)
+
+- Natural language queries over CSV data
+- Business and financial information retrieval
+- Time-period filtering
+- Source attribution
+- Relevant snippet extraction
+
+### Natural Language Math Calculations
+
+![Natural language calculator example](printscreens/03-agente_math.png)
+
+- Interpretation of natural language mathematical queries
+- Deterministic tool execution
+- Accurate calculations without relying on LLM reasoning
 
 ---
 
@@ -308,7 +290,7 @@ Observed improvements:
 
 ### Without Modelfile
 
-![Without Modelfile](exports/resposta_1.txt)
+- 📄 [Without Modelfile](exports/resposta_1.txt)
 
 - Noisy summaries
 - Inconsistent formatting
@@ -317,7 +299,7 @@ Observed improvements:
 
 ### With Modelfile
 
-![With Modelfile](exports/resposta_2.txt)
+- 📄 [With Modelfile](exports/resposta_2.txt)
 
 - Cleaner summaries
 - Structured outputs
@@ -474,3 +456,8 @@ python perguntar.py "What is the vacation policy?"
 ```bash
 streamlit run app.py
 ```
+---
+
+## License
+
+This project is proprietary. Any use, modification, or distribution requires prior contact and explicit permission from the author.

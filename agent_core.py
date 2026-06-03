@@ -17,12 +17,9 @@ from tools.file_tools import (
 )
 
 OLLAMA_URL = "http://127.0.0.1:11434"
-MODEL = "qwen2.5:3b"#qwen2.5:3b
+MODEL = "qwen2.5:3b"
 
 
-# --------------------------
-# ROUTER
-# --------------------------
 def precisa_listar_docs(pergunta):
 
     p = pergunta.lower()
@@ -39,7 +36,6 @@ def precisa_listar_docs(pergunta):
     ]
 
     return any(t in p for t in triggers)
-
 
 def precisa_ler_documento(pergunta):
 
@@ -95,7 +91,6 @@ def extrair_expressao(pergunta):
         expr
     )
 
-    # remove vazios/espaços
     resultados = [
         x.strip()
         for x in resultados
@@ -106,6 +101,7 @@ def extrair_expressao(pergunta):
         return resultados[-1]
 
     return None
+
 def precisa_hora(pergunta):
 
     triggers = [
@@ -119,7 +115,6 @@ def precisa_hora(pergunta):
 
     return any(t in p for t in triggers)
 
-
 def precisa_calculo(pergunta):
 
     return bool(
@@ -130,7 +125,6 @@ def precisa_calculo(pergunta):
         )
     )
 
-
 def precisa_exportar(pergunta):
 
     p = pergunta.lower()
@@ -140,11 +134,6 @@ def precisa_exportar(pergunta):
         or "guardar em txt" in p
         or "gera ficheiro" in p
     )
-
-
-# --------------------------
-# LLM
-# --------------------------
 
 def gerar_resposta_rag(
     pergunta,
@@ -191,16 +180,11 @@ RESPOSTA:
 
     return r.json()["response"]
 
-
 # --------------------------
 # MAIN
 # --------------------------
 
 def executar_agente(pergunta):
-
-    # ----------------------
-    # HORA
-    # ----------------------
 
     if precisa_hora(pergunta):
 
@@ -211,10 +195,6 @@ def executar_agente(pergunta):
             "fontes": [],
             "ficheiro": None
         }
-
-    # ----------------------
-    # CÁLCULO
-    # ----------------------
 
     if precisa_calculo(pergunta):
 
@@ -231,7 +211,7 @@ def executar_agente(pergunta):
                 "fontes": [],
                 "ficheiro": None
             }
-    # ----------------------
+# ----------------------
 # LISTAR DOCUMENTOS
 # ----------------------
 
@@ -245,10 +225,9 @@ def executar_agente(pergunta):
             "ficheiro": None
         }
 
-
-    # ----------------------
-    # LER / RESUMIR FICHEIRO
-    # ----------------------
+# ----------------------
+# LER / RESUMIR FICHEIRO
+# ----------------------
 
     if precisa_ler_documento(pergunta):
 
@@ -357,9 +336,10 @@ def executar_agente(pergunta):
             ],
             "ficheiro": None
         }
-        # ----------------------
-    # RAG AUTOMÁTICO
-    # ----------------------
+    
+# ----------------------
+# RAG AUTOMÁTICO
+# ----------------------
 
     rag = pesquisar_documentos(pergunta)
 
@@ -378,10 +358,6 @@ def executar_agente(pergunta):
             "fontes": [],
             "ficheiro": None
         }
-
-    # ----------------------
-    # DETEÇÃO DE DATAS
-    # ----------------------
 
     info_data = ""
 
@@ -419,17 +395,10 @@ def executar_agente(pergunta):
                 f"{dias}"
             )
 
-    # ----------------------
-    # GERAR RESPOSTA
-    # ----------------------
     resposta = gerar_resposta_rag(
         pergunta,
         contexto + info_data
     )
-
-    # ----------------------
-    # TRANCAR FONTES
-    # ----------------------
 
     resposta_normalizada = (
         resposta
@@ -457,9 +426,6 @@ def executar_agente(pergunta):
         contexto = ""
 
     ficheiro = None
-    # ----------------------
-    # EXPORTAR
-    # ----------------------
 
     if precisa_exportar(pergunta):
 

@@ -19,12 +19,10 @@ CHUNKS_FILE = "chunks.json"
 VECTORS_FILE = "vectors.npy"
 META_FILE = "index_metadata.json"
 
-
 # ---------------- HASH ----------------
 def file_hash(path):
     with open(path, "rb") as f:
         return hashlib.md5(f.read()).hexdigest()
-
 
 # ---------------- METADATA ----------------
 def carregar_metadata():
@@ -32,13 +30,11 @@ def carregar_metadata():
         return json.loads(Path(META_FILE).read_text(encoding="utf-8"))
     return {}
 
-
 def guardar_metadata(meta):
     Path(META_FILE).write_text(
         json.dumps(meta, indent=2, ensure_ascii=False),
         encoding="utf-8"
     )
-
 
 # ---------------- PDF ----------------
 def ler_pdf(path):
@@ -236,7 +232,6 @@ def indexar_documentos():
         else:
             texto = ""
 
-        # 🔥 proteção contra ficheiros vazios
         if not texto or not texto.strip():
             print(f"⚠️ ficheiro vazio: {ficheiro.name}")
             meta[str(ficheiro)] = {
@@ -264,7 +259,6 @@ def indexar_documentos():
                 "path": str(ficheiro.resolve())
             })
 
-        # ⚠️ valor provisório (corrigido depois)
         meta[str(ficheiro)] = {
             "hash": h,
             "chunks": len(chunks),
@@ -289,7 +283,6 @@ def indexar_documentos():
         else:
             print(f"⚠️ chunk ignorado (embedding falhou)")
 
-    # 🔥 garantir alinhamento
     novos_chunks = chunks_validos
 
     if len(novos_vetores) == 0:
