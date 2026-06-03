@@ -212,12 +212,10 @@ Demonstrates a multi-step interaction using an `.eml` document where the system 
 
 Capabilities shown:
 
-- Email sender identification
+- Extraction of structured email metadata (sender, date, subject) and full content parsing
 - Temporal reasoning ("How many days ago was this email sent?")
-- Automatic document summarization
-- Exporting generated responses
-- Conversation history tracking
-- Context-aware follow-up interactions
+- Automatic document summarization and exporting generated responses (exports/ directory)
+- Implicit contextual memory for reference resolution and context-aware follow-up interactions (e.g., “this email”)
 
 Email files are particularly challenging because they often contain significant noise and unstructured content, including:
 
