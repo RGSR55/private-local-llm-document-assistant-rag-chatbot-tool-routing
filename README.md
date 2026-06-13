@@ -4,9 +4,13 @@ This project is a **fully local and privacy-first AI document assistant** that c
 
 The system runs entirely offline using **local LLMs through Ollama**, ensuring **zero external API dependency** and **no data leakage**.
 
-It was specifically designed for environments with **limited computational resources** (~2GB available RAM and no dedicated GPU), where only lightweight models can realistically operate.
+It was specifically designed for environments with **limited computational resources**:
 
-Since smaller models often struggle with reliable native **tool calling**, the architecture introduces a **deterministic routing layer** capable of invoking specialized local tools instead of relying exclusively on model-native tool calling.
+The project was developed on a machine with 6 GB of RAM and no dedicated GPU. With the operating system idle, approximately 4 GB of memory were available. The full stack - comprising VS Code, Ollama, and Streamlit - was executed locally and concurrently, maintaining stable and usable performance. This demonstrates the system’s suitability for resource-constrained environments and its potential for repurposing older PCs as locally hosted, remotely accessible AI assistants.
+
+These constraints motivated an architecture centered on efficiency, prioritizing lightweight local models, optimized retrieval mechanisms, and deterministic tool routing rather than reliance on larger models or additional compute capacity.
+
+In particular, because smaller models often struggle with reliable native **tool calling**, the architecture introduces a **deterministic routing layer** capable of invoking specialized local tools instead of relying exclusively on model-native tool calling.
 
 The system introduces a **rule-based runtime LLM-agent** responsible for routing requests toward specialized local tools or semantic retrieval pipelines.
 
